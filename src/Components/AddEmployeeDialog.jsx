@@ -85,14 +85,19 @@ export default function AddEmployeeDialog({ onEmployeeAdded }) {
         },
     });
 
-    //handle image change and preview it
+    //handle image change and preview it, convert to base64
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        formik.setFieldValue('image', file);
-        //ste preview for the image
-        setPreview(URL.createObjectURL(file)); 
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // reader.result contains the base64 string
+                formik.setFieldValue('image', reader.result);
+                setPreview(reader.result); // Use base64 for preview too
+            };
+            reader.readAsDataURL(file);
+        }
     };
-
     return (
         <>
             <button

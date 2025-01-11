@@ -130,8 +130,22 @@ function Home() {
                                 <tr key={employee.id} className="border-b font-workSans text-md border-gray-200 dark:border-slate-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300">
                                     <td className="py-3 px-4 flex items-center justify-center">
                                         {
-                                            employee.imagePath ? (<img className='rounded-full m-10 md:m-0 h-10 md:h-20 shadow-md' src={`http://localhost:5000${employee.imagePath}`} alt="User Image" />)
-                                            : <img className='rounded-full m-10 md:m-0 h-10 md:h-20 shadow-md' src='/uploads/default_user.png' alt="User Image" />
+                                            employee.imagePath ? (
+                                                <img 
+                                                    className='rounded-full m-10 md:m-0 h-10 md:h-20 shadow-md' 
+                                                    src={employee.imagePath.startsWith('data:') 
+                                                        ? employee.imagePath 
+                                                        : `data:image/jpeg;base64,${employee.imagePath}`
+                                                    } 
+                                                    alt="User Image" 
+                                                />
+                                            ) : (
+                                                <img 
+                                                    className='rounded-full m-10 md:m-0 h-10 md:h-20 shadow-md' 
+                                                    src='/uploads/default_user.png' 
+                                                    alt="User Image" 
+                                                />
+                                            )
                                         }
                                     </td>
                                     <td className="py-3 px-4">{employee.firstName}</td>
